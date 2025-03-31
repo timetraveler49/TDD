@@ -12,6 +12,11 @@ class NewVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
+    def check_for_row_in_list_table(self, row_text):
+        table = self.browser.find_element(By.ID, 'id_list_table')
+        rows = table.find_elements(By.TAG_NAME, 'tr')
+        self.assertIn(row_text, [row.text for row in rows])
+
     def test_can_start_a_list_and_retrieve_it_later(self):
 
         # xx听说有一个在线待办事项的应用
@@ -38,9 +43,7 @@ class NewVisitorTest(unittest.TestCase):
         inputbox.send_keys(Keys.ENTER)
         time.sleep(1)
 
-        table = self.browser.find_element(By.ID, 'id_list_table')
-        rows = table.find_elements(By.TAG_NAME, 'tr')
-        self.assertIn('1: Buy flowers', [row.text for row in rows])
+        self.check_for_row_in_list_table('1: Buy flowers')
         # 页面中又显示了一个文本输入框，可以输入其他待办事项
         # 输入"Give a gift to Lisi"
         inputbox = self.browser.find_element(By.ID, 'id_new_item')
@@ -49,10 +52,8 @@ class NewVisitorTest(unittest.TestCase):
         time.sleep(1)
 
         # 页面更新，清单显示两个待办
-        table = self.browser.find_element(By.ID, 'id_list_table')
-        rows = table.find_elements(By.TAG_NAME, 'tr')
-        self.assertIn('1: Buy flowers', [row.text for row in rows])
-        self.assertIn('2: Give a gift to Lisi', [row.text for row in rows])
+        self.check_for_row_in_list_table('1: Buy flowers')
+        self.check_for_row_in_list_table('2: Give a gift to Lisi')
 
         # xx想知道网站是否记住清单
         # 他看到网站生成唯一URL
