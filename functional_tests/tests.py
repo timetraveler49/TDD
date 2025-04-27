@@ -111,6 +111,6 @@ class NewVisitorTest(LiveServerTestCase):
         # 这个页面还是没有张三的清单
         page_text = self.browser.find_element(By.TAG_NAME, 'body').text
         self.assertNotIn('Buy flowers', page_text)
-        self.assertIn('But milk', page_text)
+        self.assertIn('Buy milk', page_text)
 
 
