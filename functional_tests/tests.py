@@ -22,7 +22,7 @@ class NewVisitorTest(LiveServerTestCase):
             try:
                 table = self.browser.find_element(By.ID, 'id_list_table')
                 rows = table.find_elements(By.TAG_NAME, 'tr')
-                self.assertIn(row_text,[row_text for row in rows])
+                self.assertIn(row_text, [row.text for row in rows])
                 return
             except (AssertionError, WebDriverException) as e:
                 if time.time() - start_time > MAX_WAIT:
@@ -67,7 +67,7 @@ class NewVisitorTest(LiveServerTestCase):
 
         # xx想知道网站是否记住清单
         # 他看到网站生成唯一URL
-        self.fail('Finish the test!')
+        # self.fail('Finish the test!')
 
         # 他访问URL，待办列表还在
         # left with satisfaction
@@ -106,7 +106,7 @@ class NewVisitorTest(LiveServerTestCase):
         # 王五注意到网站生成了唯一的URL
         wangwu_list_url = self.browser.current_url
         self.assertRegex(wangwu_list_url, '/lists/.+')
-        self.assertNotEquals(wangwu_list_url, zhangsan_list_url)
+        self.assertNotEqual(wangwu_list_url, zhangsan_list_url)
 
         # 这个页面还是没有张三的清单
         page_text = self.browser.find_element(By.TAG_NAME, 'body').text
