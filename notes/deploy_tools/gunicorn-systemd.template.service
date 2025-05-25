@@ -1,0 +1,11 @@
+[Unit]
+Description=Gunicorn server for 8.152.194.195
+
+[Service]
+Restart=on-failure
+User=tank
+WorkingDirectory=/home/tank/sites/8.152.194.195/source
+ExecStart=/home/tank/sites/8.152.194.195/virtualenv/bin/gunicorn --bind unix:/home/tank/sites/8.152.194.195/run/8.152.194.195.socket notes.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
